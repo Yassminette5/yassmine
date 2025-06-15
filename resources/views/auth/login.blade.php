@@ -4,56 +4,92 @@
     <meta charset="UTF-8">
     <title>Connexion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #fff;
-    }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    .top-half {
-        background: url("{{ asset('frontOffice/images/slider-bg.jpg') }}") center/cover no-repeat;
-        height: 50vh;
-    }
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
 
-    .login-section {
-        margin-top: -100px;
-        padding: 50px 15px;
-        background-color: #fff;
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
-        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-    }
+        .top-half {
+            background: url("{{ asset('frontOffice/images/slider-bg.jpg') }}") center/cover no-repeat;
+            height: 50vh;
+        }
 
-    .login-box {
-        max-width: 500px;
-        margin: auto;
-        background: white;
-        padding: 40px;
-        border-radius: 12px;
-    }
+        .login-section {
+            margin-top: -100px;
+            padding: 50px 15px;
+            background-color: #fff;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    .form-control {
-        margin-bottom: 15px;
-    }
+        .login-box {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+        }
 
-    .btn-custom {
-        background-color: #0b2e34;
-        color: white;
-        border: none;
-    }
+        .form-control {
+            margin-bottom: 15px;
+        }
 
-    .btn-custom:hover {
-        background-color: #09343d;
-    }
-</style>
+        .btn-custom {
+            background-color: #0b2e34;
+            color: white;
+            border: none;
+        }
 
+        .btn-custom:hover {
+            background-color: #09343d;
+        }
+
+        .navbar-custom {
+            background-color: #0e3746;
+        }
+
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand {
+            color: white;
+        }
+
+        .navbar-custom .nav-link:hover {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
+    <!-- ✅ NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url('/home') }}">Formini</a>
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/home') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/about') }}">À propos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ IMAGE D’ACCUEIL -->
     <div class="top-half"></div>
 
+    <!-- ✅ FORMULAIRE DE CONNEXION -->
     <div class="login-section">
         <div class="login-box text-center">
             <h3 class="fw-bold">CONNEXION</h3>
@@ -84,7 +120,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-login w-100 mt-3">SE CONNECTER</button>
+                <button type="submit" class="btn btn-custom w-100 mt-3">SE CONNECTER</button>
             </form>
 
             <p class="mt-3">Vous n'avez pas de compte ?</p>
@@ -92,5 +128,7 @@
         </div>
     </div>
 
+    <!-- ✅ JS BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

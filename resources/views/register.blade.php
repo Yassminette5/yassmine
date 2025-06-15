@@ -64,6 +64,17 @@
   </style>
 </head>
 <body>
+  <nav style="background-color: #0e3746; padding: 15px 0;">
+  <div style="max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+    <div style="color: white; font-weight: bold; font-size: 20px;">Formini</div>
+    <div>
+      <a href="{{ route('home') }}" style="color: white; margin-right: 20px; text-decoration: none;">Accueil</a>
+      <a href="{{ route('about') }}" style="color: white; text-decoration: none;">À propos</a>
+    </div>
+ 
+
+</nav>
+
   <div class="container">
     <h2>Inscription</h2>
 

@@ -30,6 +30,20 @@
     </style>
 </head>
 <body>
+    
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-container" style="max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background-color: #0e3746;">
+      <div style="color: white; font-weight: bold; font-size: 20px;">Formini</div>
+      <div style="display: flex; gap: 20px;">
+        <a href="{{ url('/home') }}" style="color: white; text-decoration: none;">Accueil</a>
+        <a href="{{ url('/about') }}" style="color: white; text-decoration: none;">À propos</a>
+      </div>
+    </div>
+  </nav>
+
+
 <div class="login-container">
     <img src="{{ asset('frontOffice/images/formini.jpeg') }}" class="logo" alt="Logo Formini">
     

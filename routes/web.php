@@ -32,3 +32,12 @@ Route::get('/apprenant/home', function () {
     return view('apprenant.home'); // Crée ce fichier
 });
 
+
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+

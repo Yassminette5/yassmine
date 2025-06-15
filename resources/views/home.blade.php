@@ -55,17 +55,70 @@
       border-radius: 50%;
       cursor: pointer;
     }
+     
+    nav {
+      background-color: #0e3746;
+      padding: 15px 0;
+    }
+    nav .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+    nav .nav-container a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .container {
+      text-align: center;
+      padding: 60px;
+    }
+   
+    p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+    .slider_section {
+  position: relative;
+  height: 90vh; /* hauteur visible */
+  overflow: hidden;
+}
+
+.slider_bg_box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.slider_bg_box .bg_img_box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
   </style>
 </head>
 
 <body>
 
-  <div class="hero_area position-relative">
-    <!-- Boutons d'authentification -->
-    <div style="position: absolute; top: 20px; right: 40px; display: flex; gap: 15px; z-index: 10;">
-  <a href="/register" class="btn btn-light fw-bold">S'inscrire</a>
-  <a href="/login" class="btn btn-light fw-bold">S'authentifier</a>
+  <nav>
+   <div class="nav-container" style="flex-direction: column; align-items: center;">
+  
+  <div style="display: flex; gap: 30px;">
+    <a href="{{ route('home') }}">Accueil</a>
+    <a href="{{ route('about') }}">À propos</a>
+    <a href="{{ url('/register') }}">S'inscrire</a>
+    <a href="{{ url('/login') }}">S'authentifier</a>
+  </div>
 </div>
+
+  </nav>
 
 
     <!-- SLIDER -->
@@ -112,7 +165,7 @@
             <p>
               Nous sommes une équipe passionnée dédiée à offrir des solutions éducatives innovantes et accessibles.
             </p>
-            <a href="/register">En savoir plus</a>
+            <a href="/about">En savoir plus</a>
           </div>
         </div>
       </div>

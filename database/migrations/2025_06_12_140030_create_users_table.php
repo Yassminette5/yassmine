@@ -13,17 +13,24 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
+            $table->string('nom'); // OK : nom obligatoire
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // Ajout : protection contre dates invalides (ex. limite future ?)
             $table->date('date_naissance');
-            $table->enum('role', ['apprenant', 'instructeur']);
-            $table->string('niveau_etude')->nullable();  // seulement si apprenant
-            $table->string('cv')->nullable();            // seulement si instructeur
+
+            // Rôle limité à 3 valeurs
+            $table->enum('role', ['apprenant', 'instructeur', 'admin'])->default('apprenant');
+
+            // Champs optionnels selon le rôle
+            $table->string('niveau_etude')->nullable();  // pour apprenant
+            $table->string('cv')->nullable();            // pour instructeur
             $table->string('image')->nullable();         // image de profil
+
             $table->rememberToken();
-            $table->timestamps(); // à mettre en bas par convention
+            $table->timestamps(); // toujours en bas
         });
     }
 

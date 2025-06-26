@@ -1,0 +1,147 @@
+/* ===============================
+   🎨 DASHBOARD CSS MODERNE
+   =============================== */
+
+/* 🌐 Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6f8;
+  display: flex;
+  min-height: 100vh;
+  transition: background 0.3s ease;
+}
+
+/* 🌙 Mode sombre */
+body.dark-mode {
+  background-color: #1e1e2f;
+  color: #f5f5f5;
+}
+body.dark-mode .sidebar {
+  background-color: #2c2c3e;
+}
+body.dark-mode .topbar,
+body.dark-mode .search {
+  background-color: #1e1e2f;
+  color: #f5f5f5;
+}
+body.dark-mode .nav li.active {
+  background-color: #3b3b50;
+}
+
+/* 🔲 Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: white;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+}
+.sidebar.collapsed {
+  width: 70px;
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.sidebar .logo img {
+  width: 50px;
+}
+.nav {
+  list-style: none;
+  padding: 0;
+}
+.nav li {
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+.nav li i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+.nav li span {
+  transition: opacity 0.3s ease;
+}
+.sidebar.collapsed .nav li span {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+.nav li:hover,
+.nav li.active {
+  background-color: #34495e;
+}
+
+/* 🧱 Main */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🎛️ Topbar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.search {
+  flex: 1;
+  margin: 0 20px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.topbar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #2c3e50;
+}
+body.dark-mode .topbar button {
+  color: #f5f5f5;
+}
+
+/* 📄 Sections */
+.dashboard h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.content-section {
+  display: none;
+}
+.content-section.active {
+  display: block;
+}
+.logout-button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0;
+}
+.logout-button:hover {
+  opacity: 0.8;
+}

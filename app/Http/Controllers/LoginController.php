@@ -26,7 +26,7 @@ class LoginController extends Controller
             $role = Auth::user()->role;
 
             if ($role === 'admin') {
-                return redirect('/dashboard/admin');
+                return redirect('admin/dashboard');
             } elseif ($role === 'instructeur') {
                 return redirect('/dashboard/instructeur');
             } elseif ($role === 'apprenant') {

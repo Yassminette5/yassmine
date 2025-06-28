@@ -15,7 +15,12 @@
       <img src="{{ asset('frontoffice\images\formini.jpeg') }}" alt="Formini">
     </div>
     <ul class="nav">
-      <li data-section="utilisateurs"><i class="fas fa-users"></i><span>Utilisateurs</span></li>
+    <li>
+  <a href="{{ route('admin.users') }}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+    <i class="fas fa-users"></i><span style="margin-left: 8px;">Utilisateurs</span>
+  </a>
+</li>
+
       <li data-section="formations"><i class="fas fa-graduation-cap"></i><span>Formations</span></li>
       <li data-section="evenements"><i class="fas fa-calendar-alt"></i><span>Événements</span></li>
       <li data-section="feedback"><i class="fas fa-comment"></i><span>Feedback</span></li>
@@ -43,10 +48,7 @@
     <!-- CONTENU -->
     <section class="dashboard">
       <h2 id="admin-title" data-user='@json(auth()->user())'>Bienvenue</h2>
-      <div id="utilisateurs" class="content-section active">Liste des utilisateurs</div>
-      <div id="formations" class="content-section" style="display: none;">Liste des formations</div>
-      <div id="evenements" class="content-section" style="display: none;">Liste des événements</div>
-      <div id="feedback" class="content-section" style="display: none;">Liste des feedbacks</div>
+      
     </section>
   </main>
 

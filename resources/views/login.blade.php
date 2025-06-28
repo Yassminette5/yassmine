@@ -1,70 +1,82 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Connexion - Formini</title>
-    <link rel="stylesheet" href="{{ asset('frontOffice/css/style.css') }}">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f3f3f3;
-        }
-        .login-container {
-            width: 400px;
-            margin: 80px auto;
-            padding: 25px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .logo {
-            width: 120px;
-            margin: 0 auto 20px;
-            display: block;
-        }
-        .success-msg {
-            color: green;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Connexion - Formini</title>
+
+  <!-- Font Awesome (obligatoire pour l'œil) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+
+    .password-field {
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .password-field input {
+      width: 100%;
+      padding: 10px 40px 10px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .password-field i {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #777;
+    }
+  </style>
 </head>
 <body>
-    
-
-  <!-- NAVBAR -->
-  <nav>
-    <div class="nav-container" style="max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background-color: #0e3746;">
-      <div style="color: white; font-weight: bold; font-size: 20px;">Formini</div>
-      <div style="display: flex; gap: 20px;">
-        <a href="{{ url('/home') }}" style="color: white; text-decoration: none;">Accueil</a>
-        <a href="{{ url('/about') }}" style="color: white; text-decoration: none;">À propos</a>
-      </div>
-    </div>
-  </nav>
-
 
 <div class="login-container">
-    <img src="{{ asset('frontOffice/images/formini.jpeg') }}" class="logo" alt="Logo Formini">
-    
-    @if(session('success'))
-        <div class="success-msg">{{ session('success') }}</div>
-    @endif
+  <h2>Connexion</h2>
+  <form>
+    <label>Email</label>
+    <input type="email" required style="width:100%; padding:10px; margin-top:5px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px;">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-        <div>
-            <label>Email</label>
-            <input type="email" name="email" required class="form-control">
-        </div>
-        <div>
-            <label>Mot de passe</label>
-            <input type="password" name="password" required class="form-control">
-        </div>
-        <div class="mt-3">
-            <button type="submit" class="btn btn-danger w-100">Se connecter</button>
-        </div>
-    </form>
+    <label>Mot de passe</label>
+    <div class="password-field">
+      <input type="password" id="password" required>
+      <i class="fas fa-eye" id="togglePassword"></i>
+    </div>
+
+    <button type="submit" style="margin-top: 20px; width: 100%; padding: 10px; background: #0e3746; color: white; border: none; border-radius: 5px;">Se connecter</button>
+  </form>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+
+    toggle.addEventListener('click', function () {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+    });
+  });
+</script>
+
 </body>
 </html>

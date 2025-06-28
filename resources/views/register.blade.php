@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription | Formini</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/kTcXnD+2RmNTFZzK4HVDL2KQlNnqHXB1EwDwU6N7+N6GLfQ4Ig5o5JX/9GpC2zVvXnTq7tv7yUEAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -27,6 +27,7 @@
     }
     .form-group {
       margin-bottom: 20px;
+      position: relative;
     }
     label {
       display: block;
@@ -61,84 +62,99 @@
       margin-bottom: 20px;
       text-align: center;
     }
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 38px;
+      cursor: pointer;
+      color: #888;
+    }
   </style>
 </head>
 <body>
-  <nav style="background-color: #0e3746; padding: 15px 0;">
+
+<nav style="background-color: #0e3746; padding: 15px 0;">
   <div style="max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
     <div style="color: white; font-weight: bold; font-size: 20px;">Formini</div>
     <div>
       <a href="{{ route('home') }}" style="color: white; margin-right: 20px; text-decoration: none;">Accueil</a>
       <a href="{{ route('about') }}" style="color: white; text-decoration: none;">À propos</a>
     </div>
- 
-
 </nav>
 
-  <div class="container">
-    <h2>Inscription</h2>
+<div class="container">
+  <h2>Inscription</h2>
 
-    @if(session('success'))
-      <div class="alert-success">
-        {{ session('success') }}
-      </div>
-    @endif
+  @if(session('success'))
+    <div class="alert-success">{{ session('success') }}</div>
+  @endif
 
-    <form method="POST" action="{{ route('register.submit') }}" enctype="multipart/form-data">
-      @csrf
-      <div class="form-group">
-        <label>Nom</label>
-        <input type="text" name="nom" required>
-      </div>
-      <div class="form-group">
-        <label>Prénom</label>
-        <input type="text" name="prenom" required>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label>Mot de passe</label>
-        <input type="password" name="password" required>
-      </div>
-      <div class="form-group">
-        <label>Date de naissance</label>
-        <input type="date" name="date_naissance" required>
-      </div>
-      <div class="form-group">
-        <label>Rôle</label>
-        <select name="role" id="role" required>
-          <option value="">-- Choisir --</option>
-          <option value="apprenant">Apprenant</option>
-          <option value="instructeur">Instructeur</option>
-        </select>
-      </div>
-      <div id="niveauEtudeGroup" class="form-group" style="display: none;">
-        <label>Niveau d'étude</label>
-        <input type="text" name="niveau_etude">
-      </div>
-      <div id="cvGroup" class="form-group" style="display: none;">
-        <label>CV (PDF)</label>
-        <input type="file" name="cv" accept="application/pdf">
-      </div>
-      <div class="form-group">
-        <label>Image de profil (JPG, PNG)</label>
-        <input type="file" name="image" accept="image/png,image/jpeg">
-      </div>
-      <button type="submit" class="btn">S'inscrire</button>
-    </form>
-  </div>
+  <form method="POST" action="{{ route('register.submit') }}" enctype="multipart/form-data">
+    @csrf
+    <div class="form-group">
+      <label>Nom</label>
+      <input type="text" name="nom" required>
+    </div>
+    <div class="form-group">
+      <label>Prénom</label>
+      <input type="text" name="prenom" required>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" name="password" id="password" required>
+      <i class="fas fa-eye-slash toggle-password" id="togglePassword"></i>
+    </div>
+    <div class="form-group">
+      <label>Date de naissance</label>
+      <input type="date" name="date_naissance" required>
+    </div>
+    <div class="form-group">
+      <label>Rôle</label>
+      <select name="role" id="role" required>
+        <option value="">-- Choisir --</option>
+        <option value="apprenant">Apprenant</option>
+        <option value="instructeur">Instructeur</option>
+      </select>
+    </div>
+    <div id="niveauEtudeGroup" class="form-group" style="display: none;">
+      <label>Niveau d'étude</label>
+      <input type="text" name="niveau_etude">
+    </div>
+    <div id="cvGroup" class="form-group" style="display: none;">
+      <label>CV (PDF)</label>
+      <input type="file" name="cv" accept="application/pdf">
+    </div>
+    <div class="form-group">
+      <label>Image de profil (JPG, PNG)</label>
+      <input type="file" name="image" accept="image/png,image/jpeg">
+    </div>
+    <button type="submit" class="btn">S'inscrire</button>
+  </form>
+</div>
 
-  <script>
-    document.getElementById('role').addEventListener('change', function () {
-      const role = this.value;
-      const niveauEtudeGroup = document.getElementById('niveauEtudeGroup');
-      const cvGroup = document.getElementById('cvGroup');
+<script>
+  document.getElementById('role').addEventListener('change', function () {
+    const role = this.value;
+    document.getElementById('niveauEtudeGroup').style.display = role === 'apprenant' ? 'block' : 'none';
+    document.getElementById('cvGroup').style.display = role === 'instructeur' ? 'block' : 'none';
+  });
 
-      niveauEtudeGroup.style.display = role === 'apprenant' ? 'block' : 'none';
-      cvGroup.style.display = role === 'instructeur' ? 'block' : 'none';
-    });
-  </script>
+  // 👁️ Afficher / masquer le mot de passe
+  const toggle = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
+
+  toggle.addEventListener("click", function () {
+    const isHidden = passwordInput.type === "password";
+    passwordInput.type = isHidden ? "text" : "password";
+
+    this.classList.toggle("fa-eye-slash", !isHidden);
+    this.classList.toggle("fa-eye", isHidden);
+  });
+</script>
+
 </body>
 </html>

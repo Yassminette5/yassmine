@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Notifications\Notifiable;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,4 +24,5 @@ public function destroy(User $user)
     $user->delete();
     return back()->with('success', 'Utilisateur supprimé.');
 }
+
 }

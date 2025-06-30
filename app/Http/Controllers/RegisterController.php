@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\InstructeurInscriptionNotification;
 
 class RegisterController extends Controller
 {
@@ -44,7 +46,15 @@ class RegisterController extends Controller
 
         $user->save();
 
-        return redirect()->route('login')->with('success', 'Inscription réussie ! Veuillez vous connecter.');
+        // ✅ Envoyer une notification à l'admin si c'est un instructeur
+       if ($user->role === 'instructeur') {
+    $adminUser = User::where('role', 'admin')->first();
+    if ($adminUser) {
+        Notification::send($adminUser, new InstructeurInscriptionNotification($user));
+    }
+}
 
+
+        return redirect()->route('login')->with('success', 'Inscription réussie ! Veuillez vous connecter.');
     }
 }

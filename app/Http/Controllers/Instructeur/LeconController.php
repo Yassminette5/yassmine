@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lecon;
 use App\Models\Formation;
-
+use App\Models\Categorie;
 class LeconController extends Controller
 {
     public function index()

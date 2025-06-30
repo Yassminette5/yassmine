@@ -7,15 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\AdminController; // ✅ Ajouté
 use App\Http\Controllers\Instructeur\FormationController;
 use App\Http\Controllers\Instructeur\CategorieController;
 use App\Http\Controllers\Instructeur\LeconController;
 
 // ✅ Accueil public
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/home', fn() => view('home'))->name('home');
 
 // ✅ Inscription
 Route::get('/register', [RegisterController::class, 'showForm'])->name('register');
@@ -49,7 +47,7 @@ Route::middleware('auth')->get('/dashboard', function () {
 
 // ✅ Pages Admin
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard'); // ✅ Corrigé ici
     Route::get('/users', [UserController::class, 'index'])->name('admin.users');
     Route::patch('/users/{user}/toggle-block', [UserController::class, 'toggleBlock'])->name('admin.users.toggle-block');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
@@ -68,8 +66,6 @@ Route::get('/about', fn() => view('about'))->name('about');
 
 // ✅ Instructeur
 Route::prefix('instructeur')->middleware(['auth'])->group(function () {
-
-    // Dashboard
     Route::get('/dashboard', fn() => view('instructeur.dashboard'))->name('instructeur.dashboard');
 
     // --- Catégories ---

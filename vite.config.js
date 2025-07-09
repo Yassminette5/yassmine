@@ -6,6 +6,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+              'resources/css/app.css',
                 'resources/js/app.js',      // Laravel JS global
                 'resources/js/App.jsx'      // Point d'entrée React
             ],

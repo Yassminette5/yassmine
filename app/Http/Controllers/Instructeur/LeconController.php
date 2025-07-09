@@ -23,15 +23,23 @@ class LeconController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'titre' => 'required|string|max:255',
-            'contenu' => 'nullable|string',
-            'formation_id' => 'required|exists:formations,id',
+        'titre'          => 'required|string|max:255',
+        'contenu'        => 'nullable|string',
+        'date_creation'  => 'nullable|date',
+        'formation_id'   => 'required|exists:formations,id',
+        'pdf_file_name'  => 'nullable|file|mimes:pdf|max:2048',
         ]);
+        $pdfPath = null;
+    if ($request->hasFile('pdf_file_name')) {
+        $pdfPath = $request->file('pdf_file_name')->store('lecons', 'public');
+    }
 
         Lecon::create([
-            'titre' => $request->titre,
-            'contenu' => $request->contenu,
-            'formation_id' => $request->formation_id,
+            'titre'          => $request->titre,
+        'contenu'        => $request->contenu,
+        'date_creation'  => $request->date_creation,
+        'formation_id'   => $request->formation_id,
+        'pdf_file_name'  => $pdfPath,
         ]);
 
         // ✅ Correction ici : pas besoin de $formation->id

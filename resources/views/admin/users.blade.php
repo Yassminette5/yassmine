@@ -4,96 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Utilisateurs - Admin</title>
+
+  <!-- Styles -->
+  <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <style>
-    body {
-      display: flex;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #f5f6fa;
-    }
-
-    .sidebar {
-      width: 250px;
-      background-color: #2c3e50;
-      color: #fff;
-      padding: 25px 15px;
-      flex-shrink: 0;
-    }
-
-    .sidebar .nav li {
-      margin: 20px 0;
-    }
-
-    .sidebar .nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .sidebar .nav a:hover {
-      color: #1abc9c;
-    }
-
-    .main-content {
-      flex-grow: 1;
-      padding: 30px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .btn-action {
-      min-width: 110px;
-    }
-
-    .table th, .table td {
-      vertical-align: middle;
-    }
-
-    .card {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    .table thead {
-      border-radius: 12px;
-    }
-  </style>
 </head>
 <body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h4 class="text-center mb-4">Admin</h4>
-    <ul class="nav flex-column">
-      <li><a href="/admin/dashboard"><i class="fas fa-home me-2"></i>Dashboard</a></li>
-      <li><a href="/admin/users"><i class="fas fa-users me-2"></i>Utilisateurs</a></li>
-      <li><a href="/admin/courses"><i class="fas fa-book me-2"></i>Formations</a></li>
-      <li><a href="/admin/events"><i class="fas fa-calendar-alt me-2"></i>Événements</a></li>
-      <li><a href="/admin/feedbacks"><i class="fas fa-comment me-2"></i>Feedback</a></li>
-      <li>
-        <form action="{{ route('logout') }}" method="POST" class="mt-3">
-          @csrf
-          <button class="btn btn-danger w-100"><i class="fas fa-sign-out-alt me-1"></i> Déconnexion</button>
-        </form>
-      </li>
-    </ul>
-  </aside>
+ <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+  <div class="logo text-center py-3">
+    <img src="{{ asset('frontoffice/images/formini.jpeg') }}" alt="Formini" style="width: 60px;">
+  </div>
+  <ul class="nav flex-column px-3">
+    <li class="mb-3">
+      <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-home me-2"></i><span>Dashboard</span>
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="{{ route('admin.users') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-users me-2"></i><span>Utilisateurs</span>
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="{{ route('admin.courses') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-graduation-cap me-2"></i><span>Formations</span>
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="{{ route('admin.events') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-calendar-alt me-2"></i><span>Événements</span>
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="{{ route('admin.feedbacks') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-comment me-2"></i><span>Feedback</span>
+      </a>
+    </li>
+    <li>
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="btn btn-danger w-100 d-flex align-items-center justify-content-center mt-4">
+          <i class="fas fa-sign-out-alt me-2"></i><span>Déconnexion</span>
+        </button>
+      </form>
+    </li>
+  </ul>
+</aside>
 
-  <!-- MAIN CONTENT -->
+
+  <!-- CONTENU PRINCIPAL -->
   <main class="main-content">
-    <div class="topbar">
-      <h2 class="fw-bold">Liste des utilisateurs</h2>
-      <input type="text" id="searchInput" class="form-control w-25" placeholder=" 🔍 Rechercher...">
+    <!-- TOPBAR -->
+    <div class="topbar d-flex align-items-center justify-content-between px-3 py-2">
+      <div class="d-flex align-items-center">
+        <button id="menuToggle" title="Afficher/Masquer la barre latérale"><i class="fas fa-bars"></i></button>
+        <input type="text" class="search ms-3" placeholder="Rechercher...">
+      </div>
 
+      <div class="d-flex align-items-center gap-3">
+        
+
+        <!-- Mode sombre -->
+        <button id="darkModeToggle" title="Mode sombre"><i class="fas fa-moon"></i></button>
+      </div>
     </div>
+
+
+  <!-- CONTENT -->
+  <section class="dashboard p-4">
+    <h2 class="fw-bold mb-4">👥 Liste des utilisateurs</h2>
 
     @if(session('success'))
       <div class="alert alert-success">{{ session('success') }}</div>
@@ -129,14 +111,14 @@
                   <form method="POST" action="{{ route('admin.users.toggle-block', $user->id) }}" class="d-inline">
                     @csrf
                     @method('PATCH')
-                    <button type="submit" class="btn btn-sm btn-warning btn-action">
+                    <button type="submit" class="btn btn-sm btn-warning">
                       <i class="fas fa-ban me-1"></i>{{ $user->is_blocked ? 'Débloquer' : 'Bloquer' }}
                     </button>
                   </form>
                   <form method="POST" action="{{ route('admin.users.destroy', $user->id) }}" class="d-inline ms-2">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger btn-action">
+                    <button type="submit" class="btn btn-sm btn-danger">
                       <i class="fas fa-trash-alt me-1"></i> Supprimer
                     </button>
                   </form>
@@ -148,18 +130,20 @@
         </table>
       </div>
     </div>
-  </main>
+  </section>
+</main>
+
+<!-- SCRIPTS -->
+<script src="{{ asset('js/dashboard.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   document.getElementById('searchInput').addEventListener('keyup', function () {
-    const searchTerm = this.value.toLowerCase();
+    const term = this.value.toLowerCase();
     const rows = document.querySelectorAll('tbody tr');
-
     rows.forEach(row => {
-      const rowText = row.innerText.toLowerCase();
-      row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+      row.style.display = row.innerText.toLowerCase().includes(term) ? '' : 'none';
     });
   });
 </script>
-
 </body>
 </html>

@@ -3,27 +3,31 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController; // ✅ Ajouté
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Instructeur\FormationController;
 use App\Http\Controllers\Instructeur\CategorieController;
 use App\Http\Controllers\Instructeur\LeconController;
+use App\Http\Controllers\Apprenant\FormationsController; // ✅ bien importer ici
 
-// ✅ Accueil public
+// ✅ Page d'accueil publique
 Route::get('/home', fn() => view('home'))->name('home');
 
-// ✅ Inscription
+// ✅ À propos
+Route::get('/about', fn() => view('about'))->name('about');
+
+// ✅ Auth : Inscription
 Route::get('/register', [RegisterController::class, 'showForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
-// ✅ Connexion
+// ✅ Auth : Connexion
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
-// ✅ Déconnexion
+// ✅ Auth : Déconnexion
 Route::post('/logout', function (Request $request) {
     Auth::logout();
     $request->session()->invalidate();
@@ -31,7 +35,7 @@ Route::post('/logout', function (Request $request) {
     return redirect('/login');
 })->name('logout');
 
-// ✅ Redirection après login
+// ✅ Redirection dynamique après login
 Route::middleware('auth')->get('/dashboard', function () {
     $user = Auth::user();
     if ($user->role === 'admin') {
@@ -45,38 +49,61 @@ Route::middleware('auth')->get('/dashboard', function () {
     }
 })->name('dashboard');
 
-// ✅ Pages Admin
-Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard'); // ✅ Corrigé ici
-    Route::get('/users', [UserController::class, 'index'])->name('admin.users');
-    Route::patch('/users/{user}/toggle-block', [UserController::class, 'toggleBlock'])->name('admin.users.toggle-block');
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
-    Route::get('/courses', fn() => view('admin.courses'))->name('admin.courses');
-    Route::get('/payments', fn() => view('admin.payments'))->name('admin.payments');
-    Route::get('/feedbacks', fn() => view('admin.feedbacks'))->name('admin.feedbacks');
-    Route::get('/events', fn() => view('admin.events'))->name('admin.events');
-    Route::get('/tables', fn() => view('admin.tables'))->name('admin.tables');
+// ✅ Section Admin
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::patch('/users/{user}/toggle-block', [UserController::class, 'toggleBlock'])->name('users.toggle-block');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Formations à valider
+    Route::get('/courses', [AdminController::class, 'courses'])->name('courses');
+    Route::patch('/formations/{id}/accept', [AdminController::class, 'accepterFormation'])->name('formations.accept');
+    Route::patch('/formations/{id}/reject', [AdminController::class, 'rejeterFormation'])->name('formations.reject');
+
+    // Autres vues
+    Route::get('/payments', fn() => view('admin.payments'))->name('payments');
+    Route::get('/feedbacks', fn() => view('admin.feedbacks'))->name('feedbacks');
+    Route::get('/events', fn() => view('admin.events'))->name('events');
+    Route::get('/tables', fn() => view('admin.tables'))->name('tables');
 });
 
-// ✅ Apprenant
-Route::middleware(['auth'])->get('/apprenant/home', fn() => view('apprenant.home'))->name('apprenant.home');
+// ✅ Section Apprenant
+Route::middleware(['auth'])->group(function () {
+    Route::get('/apprenant/home', fn() => view('apprenant.home'))->name('apprenant.home');
 
-// ✅ Pages publiques
-Route::get('/about', fn() => view('about'))->name('about');
+    // ✅ Ajout route pour voir les formations (cartes) pour l'apprenant
+    Route::get('/apprenant/formations', [FormationsController::class, 'index'])->name('apprenant.index');
+    Route::post('/apprenant/formations/{id}/inscription', [FormationsController::class, 'inscrire'])
+    ->name('formations.inscription');
 
-// ✅ Instructeur
-Route::prefix('instructeur')->middleware(['auth'])->group(function () {
-    Route::get('/dashboard', fn() => view('instructeur.dashboard'))->name('instructeur.dashboard');
-
-    // --- Catégories ---
-    Route::get('/categories/create', [CategorieController::class, 'create'])->name('instructeur.categories.create');
-    Route::post('/categories', [CategorieController::class, 'store'])->name('instructeur.categories.store');
-
-    // --- Formations ---
-    Route::get('/formations/create', [FormationController::class, 'create'])->name('instructeur.formations.create');
-    Route::post('/formations', [FormationController::class, 'store'])->name('instructeur.formations.store');
-
-    // --- Leçons ---
-    Route::get('/lecons/create', [LeconController::class, 'create'])->name('instructeur.lecons.create');
-    Route::post('/lecons', [LeconController::class, 'store'])->name('instructeur.lecons.store');
 });
+// Page avec formulaire d'inscription
+Route::get('/formation/{id}/inscription', [InscriptionController::class, 'formulaire'])->name('formation.inscription');
+
+// Traitement du formulaire après soumission
+Route::post('/formation/{id}/payer', [InscriptionController::class, 'payer'])->name('formation.payer');
+
+
+// ✅ Section Instructeur
+Route::middleware(['auth'])->prefix('instructeur')->name('instructeur.')->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', fn() => view('instructeur.dashboard'))->name('dashboard');
+
+    // Formations
+    Route::get('/formations/create', [FormationController::class, 'create'])->name('formations.create');
+    Route::post('/formations', [FormationController::class, 'store'])->name('formations.store');
+
+    // Catégories
+    Route::get('/categories/create', [CategorieController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
+
+    // Leçons
+    Route::get('/lecons/create', [LeconController::class, 'create'])->name('lecons.create');
+    Route::post('/lecons', [LeconController::class, 'store'])->name('lecons.store');
+});
+Route::get('/edit-profile', function () {
+    return view('partials.edit');
+})->name('partials.edit');
+

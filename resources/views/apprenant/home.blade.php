@@ -79,12 +79,12 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto gap-4">
-                    <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">FORMATION</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">INSTRUCTEURS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">MESSAGE</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">EVENEMENTS</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
+    {{-- <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li> --}}
+<li class="nav-item"><a class="nav-link" href="{{ route('apprenant.index') }}">FORMATION</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">INSTRUCTEURS</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">MESSAGE</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">EVENEMENTS</a></li>
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">

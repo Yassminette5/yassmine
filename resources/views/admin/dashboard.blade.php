@@ -12,40 +12,46 @@
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
-    <div class="logo">
-      <img src="{{ asset('frontoffice/images/formini.jpeg') }}" alt="Formini">
-    </div>
-    <ul class="nav">
-      <li>
-        <a href="{{ route('admin.users') }}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-          <i class="fas fa-users"></i><span style="margin-left: 8px;">Utilisateurs</span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ route('admin.courses') }}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-          <i class="fas fa-graduation-cap"></i><span style="margin-left: 8px;">Formations</span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ route('admin.events') }}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-          <i class="fas fa-calendar-alt"></i><span style="margin-left: 8px;">Événements</span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ route('admin.feedbacks') }}" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-          <i class="fas fa-comment"></i><span style="margin-left: 8px;">Feedback</span>
-        </a>
-      </li>
-      <li>
-        <form method="POST" action="{{ route('logout') }}" id="logout-form">
-          @csrf
-          <button type="submit" class="logout-button">
-            <i class="fas fa-sign-out-alt"></i><span>Déconnexion</span>
-          </button>
-        </form>
-      </li>
-    </ul>
-  </aside>
+  <div class="logo text-center py-3">
+    <img src="{{ asset('frontoffice/images/formini.jpeg') }}" alt="Formini" style="width: 60px;">
+  </div>
+  <ul class="nav flex-column px-3">
+    <li class="mb-3">
+      <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-home me-2"></i><span>Dashboard</span>
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="{{ route('admin.users') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-users me-2"></i><span>Utilisateurs</span>
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="{{ route('admin.courses') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-graduation-cap me-2"></i><span>Formations</span>
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="{{ route('admin.events') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-calendar-alt me-2"></i><span>Événements</span>
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="{{ route('admin.feedbacks') }}" class="d-flex align-items-center text-white text-decoration-none">
+        <i class="fas fa-comment me-2"></i><span>Feedback</span>
+      </a>
+    </li>
+    <li>
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="btn btn-danger w-100 d-flex align-items-center justify-content-center mt-4">
+          <i class="fas fa-sign-out-alt me-2"></i><span>Déconnexion</span>
+        </button>
+      </form>
+    </li>
+  </ul>
+</aside>
+
 
   <!-- CONTENU PRINCIPAL -->
   <main class="main-content">
